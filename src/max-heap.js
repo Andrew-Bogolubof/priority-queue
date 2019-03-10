@@ -46,9 +46,10 @@ class MaxHeap {
 			return;
 		}
 		this.parentNodes.push(node);
-		let length = this.parentNodes.length;
-		let parent = Math.floor( (length - 2) / 2 );
-		this.parentNodes[parent].appendChild(node);
+		this.parentNodes[0].appendChild(node);
+		if (this.parentNodes[0].left !== null && this.parentNodes[0].right !== null) {
+			this.parentNodes.shift();
+		}
 	}
 
 	shiftNodeUp(node) {
