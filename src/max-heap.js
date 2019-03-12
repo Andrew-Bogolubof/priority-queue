@@ -18,22 +18,29 @@ class MaxHeap {
 
 	pop() {
 		if ( !this.isEmpty() ) {
+			// console.log(this.root.priority, ' ', this.root.data);
 			let returnRoot = this.detachRoot();
-			console.log(returnRoot.priority, ' and data ', returnRoot.data);
+			// console.log(returnRoot.priority, ' and data ', returnRoot.data);
+			// console.log('size of this is ', this.size(), ' is empty ', this.isEmpty());
+			// console.log(this);
 			if (this.isEmpty()) {
+				// console.log('HEY MAN');
 				return returnRoot.data;
 			}
 			this.restoreRootFromLastInsertedNode(returnRoot);
-			console.log('After tree has benn restored', this.root.priority, ' and data ', this.root.data);
+			// console.log('After tree has benn restored', this.root.priority, ' and data ', this.root.data);
 			this.shiftNodeDown(this.root);
-			console.log('and new root is down ', this.root.priority, ' and data ', this.root.data);
+			// console.log('and new root is down ', this.root.priority, ' and data ', this.root.data);
 			return returnRoot.data;
 		}
 	}
 
 	detachRoot() {
+		// console.log('HEY FLUFFY');
 		let forReturn = this.root;
+		// console.log('in detach ', this.root);
 		this.root = null;
+		// console.log('in detach ', this.root);
 		if (this.parentNodes[0] === forReturn ){
 			// console.log("hey here the problem ", this.parentNodes);
 			this.parentNodes.shift();
@@ -43,9 +50,9 @@ class MaxHeap {
 
 
 	restoreRootFromLastInsertedNode(detached) {
-		for (let i = 0; i < this.parentNodes.length; i++)
-			console.log('hey _________ ', this.parentNodes[i].priority);
-		console.log('end_________________________________________________')
+		// for (let i = 0; i < this.parentNodes.length; i++)
+		// 	console.log('hey _________ ', this.parentNodes[i].priority);
+		// console.log('end_________________________________________________')
 
 		let index = this.parentNodes.indexOf(detached);
 			if (index >= 0) {
@@ -84,21 +91,21 @@ class MaxHeap {
 
 		this.root = lastInsertNode;
 
-		for (let i = 0; i < this.parentNodes.length; i++)
-		console.log('hey _________ ', this.parentNodes[i].priority);
-		console.log('end_________________________________________________')
+		// for (let i = 0; i < this.parentNodes.length; i++)
+		// console.log('hey _________ ', this.parentNodes[i].priority);
+		// console.log('end_________________________________________________')
 
 
-		function isAbsRight(node) {
-			if (node.parent === null ) {
-				return true;
-			}
-			if (node.parent.right == node) {
-				return isAbsRight(node.parent);
-			} else {
-				return false;
-			}
-		}
+		// function isAbsRight(node) {
+		// 	if (node.parent === null ) {
+		// 		return true;
+		// 	}
+		// 	if (node.parent.right == node) {
+		// 		return isAbsRight(node.parent);
+		// 	} else {
+		// 		return false;
+		// 	}
+		// }
 	}
 
 	size() {
@@ -107,8 +114,8 @@ class MaxHeap {
 		}
 		return counter(this.root);
 		function counter(node) {
-			if (node.left === null && node.right === null) {
-				return 1;
+			if (node === null) {
+				return 0;
 			}
 			return 1 + counter(node.right) + counter(node.left);
 		}
