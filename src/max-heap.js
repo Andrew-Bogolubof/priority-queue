@@ -19,14 +19,14 @@ class MaxHeap {
 	pop() {
 		if ( !this.isEmpty() ) {
 			let returnRoot = this.detachRoot();
-			// console.log(returnRoot.priority, ' and data ', returnRoot.data);
+			console.log(returnRoot.priority, ' and data ', returnRoot.data);
 			if (this.isEmpty()) {
-				return;
+				return returnRoot.data;
 			}
 			this.restoreRootFromLastInsertedNode(returnRoot);
-			// console.log('After tree has benn restored', this.root.priority, ' and data ', this.root.data);
+			console.log('After tree has benn restored', this.root.priority, ' and data ', this.root.data);
 			this.shiftNodeDown(this.root);
-			// console.log('and new root is down ', this.root.priority, ' and data ', this.root.data);
+			console.log('and new root is down ', this.root.priority, ' and data ', this.root.data);
 			return returnRoot.data;
 		}
 	}
@@ -43,14 +43,22 @@ class MaxHeap {
 
 
 	restoreRootFromLastInsertedNode(detached) {
+		for (let i = 0; i < this.parentNodes.length; i++)
+			console.log('hey _________ ', this.parentNodes[i].priority);
+		console.log('end_________________________________________________')
 
 		let index = this.parentNodes.indexOf(detached);
 			if (index >= 0) {
 				this.parentNodes.shift();
 				this.parentNodes.unshift(this.parentNodes[this.parentNodes.length - 1]);
+			} else if (this.parentNodes[this.parentNodes.length - 1].parent === detached){
+				this.parentNodes.unshift(this.parentNodes[this.parentNodes.length - 1]);
+			} else if (this.parentNodes[0].parent === detached) {
+					// this.parentNodes.shift();
 			} else {
 				this.parentNodes.unshift(this.parentNodes[this.parentNodes.length - 1].parent);
-			}
+		}
+
 
 		let lastInsertNode = this.parentNodes.pop();
 		// let parentOfLast = lastInsertNode.parent;
@@ -64,19 +72,21 @@ class MaxHeap {
 		// 	// console.log('HEY I AM HERE');
 		// 	this.parentNodes.unshift(parentOfLast);
 		// } 
-		// if (detached.left !== null) {
-		// 	lastInsertNode.left = detached.left; 
-		// 	detached.left.parent = lastInsertNode;
-		// }
-		// if (detached.right !== null) {
-		// 	lastInsertNode.right = detached.right;
-		// 	detached.right.parent = lastInsertNode;	
-		// }
+
+		if (detached.left !== null) {
+			lastInsertNode.left = detached.left; 
+			detached.left.parent = lastInsertNode;
+		}
+		if (detached.right !== null) {
+			lastInsertNode.right = detached.right;
+			detached.right.parent = lastInsertNode;	
+		}
+
 		this.root = lastInsertNode;
 
-		// for (let i = 0; i < this.parentNodes.length; i++)
-		// console.log('hey _________ ', this.parentNodes[i].priority);
-		// console.log('end_________________________________________________')
+		for (let i = 0; i < this.parentNodes.length; i++)
+		console.log('hey _________ ', this.parentNodes[i].priority);
+		console.log('end_________________________________________________')
 
 
 		function isAbsRight(node) {
@@ -162,7 +172,9 @@ class MaxHeap {
 		// for (let i = 0; i < this.parentNodes.length; i++) 
 		// 	console.log(this.parentNodes[i].priority);
 		// console.log('end');
-
+		if (node === null && node === null) {
+			return;
+		}
 		if (node.left === null && node.right === null) {
 			return;
 		}
